@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void 
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id()->primary(1);
+            $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
             $table->timestamp('due_date')->nullable();

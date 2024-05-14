@@ -8,6 +8,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\DataController;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+
+Route::get("data",[DataController::class,"gettasks"]);
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+//Route::get('/tasks', [TaskController::class, 'getAllTasks']);
 
 Route::redirect('/', '/dashboard');
 

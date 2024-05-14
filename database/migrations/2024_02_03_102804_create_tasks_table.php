@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -11,10 +12,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id()->primary(1);
+            $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            //$table->string('image_path')->nullable();
+            $table->string('image_path')->nullable();
             $table->string('status');
             $table->string('priority');
             $table->string('due_date')->nullable();
@@ -24,6 +25,18 @@ return new class extends Migration {
             $table->foreignId('project_id')->constrained('projects');
             $table->timestamps();
         });
+
+        // Define the trigger
+        DB::unprepared('
+        CREATE TRIGGER before_insert_task
+        BEFORE INSERT ON tasks
+        FOR EACH ROW
+        BEGIN
+            IF NEW.status IS NULL THEN
+                SET NEW.status = "pending";
+            END IF;
+        END
+        ');
     }
 
     /**

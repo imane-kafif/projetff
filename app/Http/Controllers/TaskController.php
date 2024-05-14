@@ -12,7 +12,9 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -24,7 +26,7 @@ class TaskController extends Controller
         $query = Task::query();
 
         $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
+        $sortDirection = request("sort_direction", "asc");
 
         if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
@@ -136,6 +138,7 @@ class TaskController extends Controller
             ->with('success', "Task \"$name\" was deleted");
     }
 
+    
     public function myTasks()
     {
         $user = auth()->user();

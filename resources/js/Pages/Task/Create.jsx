@@ -8,7 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Create({ auth, projects, users }) {
   const { data, setData, post, errors, reset } = useForm({
-    // image: "",
+     image: "",
     name: "",
     status: "",
     description: "",
@@ -60,7 +60,7 @@ export default function Create({ auth, projects, users }) {
 
                 <InputError message={errors.project_id} className="mt-2" />
               </div>
-              {/* <div className="mt-4">
+              {<div className="mt-4">
                 <InputLabel htmlFor="task_image_path" value="Task Image" />
                 <TextInput
                   id="task_image_path"
@@ -70,7 +70,7 @@ export default function Create({ auth, projects, users }) {
                   onChange={(e) => setData("image", e.target.files[0])}
                 />
                 <InputError message={errors.image} className="mt-2" />
-              </div> */}
+              </div> }
               <div className="mt-4">
                 <InputLabel htmlFor="task_name" value="Task Name" />
 
