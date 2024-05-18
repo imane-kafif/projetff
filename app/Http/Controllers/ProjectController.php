@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request; 
+
 
 class ProjectController extends Controller
 {
@@ -129,8 +131,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(Request $request, Project $project)
     {
+        // Vérifie si l'utilisateur est un administrateur
+        if(auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
         $name = $project->name;
         $project->delete();
         if ($project->image_path) {

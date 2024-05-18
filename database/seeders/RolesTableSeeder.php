@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Role;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // Project::factory()
-        //     ->count(5)
-        //     ->hasTasks(5)
-        //     ->create();
-
+        $roles = [
+            [
+                'id' => 1,
+                'title' => 'Admin',
+            ],
+            [
+                'id' => 2,
+                'title' => 'User',
+            ],
+        ];
+        Role::insert($roles);
         
     }
 }

@@ -128,15 +128,23 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Task $task)
-    {
-        $name = $task->name;
-        $task->delete();
-        if ($task->image_path) {
-            Storage::disk('public')->deleteDirectory(dirname($task->image_path));
-        }
-        return to_route('task.index')
-            ->with('success', "Task \"$name\" was deleted");
+{
+    $user = auth()->user();
+
+    // Check if the task was created by the current user
+    if ($task->created_by !== $user->id) {
+        return abort(403, 'Unauthorized action.');
     }
+
+    $name = $task->name;
+    $task->delete();
+
+    if ($task->image_path) {
+        Storage::disk('public')->deleteDirectory(dirname($task->image_path));
+    }
+
+    return redirect()->route('task.index')->with('success', "Task \"$name\" was deleted");
+}
 
     
     public function myTasks()

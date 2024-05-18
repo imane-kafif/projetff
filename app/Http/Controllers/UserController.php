@@ -95,14 +95,21 @@ class UserController extends Controller
             ->with('success', "User \"$user->name\" was updated");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        $name = $user->name;
-        $user->delete();
-        return to_route('user.index')
-            ->with('success', "User \"$name\" was deleted");
+    
+        /**
+ * Remove the specified resource from storage.
+ */
+public function destroy(User $user)
+{
+    if(auth()->user()->role !== 'admin') {
+        abort(403, 'Unauthorized action.');
     }
+
+    $name = $user->name;
+    $user->delete();
+    return redirect()->route('user.index')
+        ->with('success', "User \"$name\" was deleted");
 }
+}
+
+

@@ -28,7 +28,6 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-        
             <Head title="Log in" />
 
             {status && (
@@ -102,6 +101,18 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+
+            {/* Message for new users */}
+            <div className="mt-4 text-sm text-gray-400">
+                If you're new,{" "}
+                <Link
+                    href={route("register")}
+                    className="underline"
+                >
+                    click here
+                </Link>{" "}
+                to register.
+            </div>
         </GuestLayout>
     );
 }
